@@ -1,0 +1,10 @@
+version: '3.9'
+
+services:
+  sands-of-time:
+    image: sarvesh717/sands-of-time:v2
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./game:/app/game
+    restart: unless-stopped
