@@ -20,7 +20,7 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v6
       with:
         image: sarvesh717/sands-of-time
-        tags: latest
+        tags: v2
         registry: docker.io
         dockerfile: Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
