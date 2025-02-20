@@ -31,19 +31,19 @@ jobs:
           push: true
           tags: sarvesh717/sands-of-time:v2
 
-      # - name: Deploy to AWS EC2
-      #   env:
-      #     EC2_HOST: ${{ secrets.EC2_HOST }}
-      #     EC2_USER: ${{ secrets.EC2_USER }}
-      #     SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
-      #   run: |
-      #     echo "$SSH_KEY" > key.pem
-      #     chmod 600 key.pem
-      #     ssh -o StrictHostKeyChecking=no -i key.pem $EC2_USER@$EC2_HOST << 'EOF'
-      #       # Pull the latest Docker image
-      #       docker pull sarvesh717/sands-of-time:v2
-      #       # Stop any running container from the same image (if any)
-      #       docker stop $(docker ps -q --filter ancestor=sarvesh717/sands-of-time:v2) || true
-      #       # Run a new container
-      #       docker run -d -p 8000:8000 sarvesh717/sands-of-time:v2
-      #     EOF
+      - name: Deploy to AWS EC2
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USER: ${{ secrets.EC2_USER }}
+          SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+        run: |
+          echo "$SSH_KEY" > key.pem
+          chmod 600 key.pem
+          ssh -o StrictHostKeyChecking=no -i key.pem $EC2_USER@$EC2_HOST << 'EOF'
+            # Pull the latest Docker image
+            docker pull sarvesh717/sands-of-time:v2
+            # Stop any running container from the same image (if any)
+            docker stop $(docker ps -q --filter ancestor=sarvesh717/sands-of-time:v2) || true
+            # Run a new container
+            docker run -d -p 8000:8000 sarvesh717/sands-of-time:v2
+          EOF
