@@ -23,6 +23,9 @@ COPY . .
 # Change directory into the game folder where manage.py is located
 WORKDIR /app/game
 
+# Install the dependencies
+RUN pip install -r ./requirements.txt
+
 # Expose the port the app runs on
 EXPOSE 8000
 
