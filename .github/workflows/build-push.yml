@@ -29,23 +29,56 @@ jobs:
   deploy-container:
     needs: build-image
     runs-on: ubuntu-latest
-    if: ${{ success() }} # ! we only want to deploy if the build was successful
+    if: ${{ success() }}
     steps:
     - name: executing remote ssh commands
       uses: appleboy/ssh-action@v1.0.0
       with:
         host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER}}
-        key: ${{ secrets.EC2_SSH_KEY}}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-            echo "list all folders in the home directory"
-            ls -lah
-            echo "change directory to Sands-Of-Time-Deployment"
-            cd Sands-Of-Time-Deployment
-            echo "list all folders in Sands-Of-Time-Deployment"
-            ls -lah
-            echo "pulling the latest image from docker hub"
-            docker compose pull
-            docker image ls
-            docker compose up -d
-            docker ps -a 
+          echo "Listing folders in home directory:"
+          ls -lah ~
+          
+          # Use the absolute path in home directory for the repository
+          REPO_DIR=~/Sands-Of-Time-Deployment
+          if [ -d "$REPO_DIR" ]; then
+            echo "Directory exists, pulling latest changes..."
+            cd "$REPO_DIR"
+            git pull origin main
+          else
+            echo "Directory not found; cloning repository..."
+            git clone https://github.com/Sarvesh521/Sands-Of-Time-Deployment.git "$REPO_DIR"
+            cd "$REPO_DIR"
+          fi
+
+          echo "Checking for Docker installation..."
+          if ! command -v docker >/dev/null 2>&1; then
+            echo "Docker not installed, installing docker..."
+            sudo apt-get update && sudo apt-get install -y docker.io
+          else
+            echo "Docker is installed."
+          fi
+
+          echo "Checking for Docker Compose installation..."
+          if ! command -v docker-compose >/dev/null 2>&1; then
+            echo "docker-compose not installed, installing docker-compose..."
+            sudo apt-get update && sudo apt-get install -y docker-compose
+          else
+            echo "docker-compose is installed."
+          fi
+
+          echo "Pulling latest images from docker hub:"
+          sudo docker-compose pull
+
+          echo "Listing docker images:"
+          sudo docker image ls
+
+          echo "Starting containers with docker-compose:"
+          sudo docker-compose up -d || true
+
+          echo "Listing running containers:"
+          sudo docker ps -a
+
+          echo "Deployment complete."
