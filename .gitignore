@@ -74,4 +74,3 @@ Desktop.ini
 
 # Ignore password file
 passwords.txt 
-*.sqlite3

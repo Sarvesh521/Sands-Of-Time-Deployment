@@ -5,6 +5,6 @@ services:
     image: sarvesh717/sands-of-time:v2
     ports:
       - "8000:8000"
-    # volumes:
-    #   - ./game:/app/game
-    # restart: unless-stopped
+    volumes:
+      - ./game:/app/game
+    restart: unless-stopped

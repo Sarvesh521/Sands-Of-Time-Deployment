@@ -13,7 +13,12 @@ WORKDIR /app
 COPY --chown=appuser:appuser requirements.txt ./
 
 # Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends --no-install-suggests \
+    build-essential \
+    pkg-config \
+    default-libmysqlclient-dev \
+    && pip install --no-cache-dir --upgrade pip
 
 # Copy the entire project and set ownership for security
 COPY --chown=appuser:appuser . .
