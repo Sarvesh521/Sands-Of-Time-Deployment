@@ -31,42 +31,21 @@ jobs:
           push: true
           tags: sarvesh717/sands-of-time:v2
 
-      - name: Deploy to AWS EC2 using Docker Compose
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.EC2_HOST}}
-          username: ${{ secrets.EC2_USER}}
-          key: ${{ secrets.EC2_SSH_KEY}}
-          script: |
-            # Set your project directory – update if necessary
-            PROJECT_DIR="/home/ec2-user/Sands-Of-Time-Deployment"
-            if [ ! -d "$PROJECT_DIR" ]; then
-              echo "Directory $PROJECT_DIR not found. Exiting."
-              exit 1
-            fi
-            cd "$PROJECT_DIR"
-            
-            # Ensure git is installed
-            if ! command -v git &>/dev/null; then
-              echo "git not found. Installing git..."
-              sudo dnf install -y git
-            fi
-
-            # Ensure docker-compose is installed (the legacy binary or plugin)
-            if ! docker compose version &>/dev/null; then
-              if ! command -v docker-compose &>/dev/null; then
-                echo "docker-compose not found. Installing docker-compose..."
-                sudo dnf install -y docker-compose
-              else
-                echo "Using docker-compose binary."
-              fi
-            fi
-
-            # Update repository
-            git pull origin main
-
-            # Pull updated images and bring up containers using docker compose
-            sudo docker compose pull
-            sudo docker image ls
-            sudo docker compose up -d
-            sudo docker ps -a
+  deploy-container:
+        needs: build-and-deploy
+        runs-on: ubuntu-latest
+        if: ${{ success() }} # ! we only want to deploy if the build was successful
+        steps:
+        - name: executing remote ssh commands
+          uses: appleboy/ssh-action@v1.0.0
+          with:
+            host: ${{ secrets.EC2_HOST }}
+            username: ${{ secrets.EC2_USER}}
+            key: ${{ secrets.EC2_SSH_KEY }}
+            script: |
+                cd Sands-Of-Time-Deployment
+                git pull origin main
+                docker compose pull
+                docker image ls
+                docker compose up -d
+                docker ps -a
