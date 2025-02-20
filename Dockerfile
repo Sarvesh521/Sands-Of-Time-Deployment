@@ -1,14 +1,5 @@
 FROM python:3.9.21-slim
 
-# Set environment variables
-ENV PYTHONUNBUFFERED=1
-
-# Set the working directory
-WORKDIR /app
-
-# Copy the requirements file
-COPY requirements.txt ./
-
 # Install dependencies
 RUN apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests \
@@ -17,11 +8,12 @@ RUN apt-get update \
        default-libmysqlclient-dev \
     && pip install --no-cache-dir --upgrade pip
 
-# Copy the entire project
-COPY . .
 
 # Change directory into the game folder where manage.py is located
-WORKDIR /app/game
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+COPY . /app
 
 # Install the dependencies
 RUN pip install -r ./requirements.txt
