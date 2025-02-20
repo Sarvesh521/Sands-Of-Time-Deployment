@@ -20,7 +20,7 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v6
       with:
         image: sarvesh717/sands-of-time
-        tags: v2
+        tags: latest
         registry: docker.io
         dockerfile: Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
@@ -34,13 +34,12 @@ jobs:
     - name: executing remote ssh commands
       uses: appleboy/ssh-action@v1.0.0
       with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER}}
-        password: ${{ secrets.EC2_SSH_KEY}}
+        host: ${{ secrets.HOST_IP }}
+        username: ${{ secrets.SSH_USERNAME}}
+        password: ${{ secrets.SSH_PASSWORD }}
         script: |
-            cd infin8
+            cd Sands-of-Time-Deployment
             docker compose pull
             docker image ls
             docker compose up -d
             docker ps -a 
-            echo "Deployment successful"
