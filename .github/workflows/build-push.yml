@@ -46,8 +46,12 @@ jobs:
             sudo systemctl start docker
             # Pull the latest Docker image
             sudo docker pull sarvesh717/sands-of-time:v2
-            # Stop any running container from the same image (if any)
-            sudo docker stop $(sudo docker ps -q --filter ancestor=sarvesh717/sands-of-time:v2) || true
+            # Stop and remove an existing container if it exists
+            CONTAINER=$(sudo docker ps -q --filter ancestor=sarvesh717/sands-of-time:v2)
+            if [ -n "$CONTAINER" ]; then
+              sudo docker stop "$CONTAINER"
+              sudo docker rm "$CONTAINER"
+            fi
             # Run a new container
             sudo docker run -d -p 8000:8000 sarvesh717/sands-of-time:v2
           EOF
