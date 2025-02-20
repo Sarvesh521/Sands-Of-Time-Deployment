@@ -39,7 +39,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY}}
           script: |
             # Set your project directory – update if necessary
-            PROJECT_DIR="/home/ec2-user/Sands-Of-Time"
+            PROJECT_DIR="/home/ec2-user/Sands-Of-Time-Deployment"
             if [ ! -d "$PROJECT_DIR" ]; then
               echo "Directory $PROJECT_DIR not found. Exiting."
               exit 1
