@@ -44,8 +44,8 @@ jobs:
             ls -lah ~
             echo "Listing folders in current directory:"
             ls -lah
-            echo "Changing directory to sands-of-time:"
-            cd sands-of-time
+            echo "Changing directory to Sands-Of-Time-Deployment:"
+            cd Sands-of-Time-Deployment
             echo "Pulling latest changes from GitHub:"
             git pull origin main
             echo "pulling latest images from docker hub:"
