@@ -46,4 +46,6 @@ jobs:
                 cd Sands-Of-Time-Deployment
                 git pull origin main
                 sudo docker compose pull
+                sudo docker image ls
                 sudo docker compose up -d
+                sudo docker ps -a
