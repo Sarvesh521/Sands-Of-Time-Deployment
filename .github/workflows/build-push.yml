@@ -31,46 +31,34 @@ jobs:
   deploy-container:
     needs: build-image
     runs-on: ubuntu-latest
-    if: ${{ success() }} # Only deploy if the build was successful
+    if: ${{ success() }}
     steps:
-      - name: executing remote ssh commands
+      - name: Executing remote SSH commands
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            echo "Listing folders in home directory:"
+            ls -lah ~
+            echo "Listing folders in current directory:"
+            ls -lah
             echo "Changing directory to Sands-Of-Time-Deployment:"
             cd Sands-Of-Time-Deployment
-
-            echo "Installing Docker and Docker Compose"
-            # Install Docker
-            curl -fsSL https://get.docker.com -o get-docker.sh
-            sh get-docker.sh
-
-            # Add current user to docker group to avoid sudo (optional)
-            sudo usermod -aG docker $USER
-            newgrp docker
-
-            # Install Docker Compose v2 (integrated with Docker CLI)
-            DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
-            mkdir -p $DOCKER_CONFIG/cli-plugins
-            curl -SL https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
-            chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
-
-            echo "Docker and Docker Compose installed:"
-            docker --version
-            docker compose version
-
+            echo "Listing folders in Sands-Of-Time-Deployment:"
+            ls -lah
+            echo "Installing Docker and docker-compose"
+            sudo yum update -y
+            sudo amazon-linux-extras install docker -y
+            sudo service docker start
+            sudo yum install -y docker-compose
             echo "Pulling latest changes from GitHub:"
             git pull origin main
-
             echo "Pulling latest images from Docker Hub:"
-            docker compose pull
-            docker image ls
-
-            echo "Starting containers:"
-            docker compose up -d
-            docker ps -a
-
+            sudo docker-compose pull
+            sudo docker image ls
+            echo "Starting containers with docker-compose up -d"
+            sudo docker-compose up -d
+            sudo docker ps -a
             echo "Deployment complete."
