@@ -1,4 +1,4 @@
-FROM python:3.9.21-slim
+FROM python:3.10-slim-bullseye
 
 # Install dependencies
 RUN apt-get update \
@@ -13,7 +13,7 @@ RUN apt-get update \
 WORKDIR /app
 
 # Copy the current directory contents into the container at /app
-COPY . /app
+COPY ./game /app
 
 # Install the dependencies
 RUN pip install -r ./requirements.txt
