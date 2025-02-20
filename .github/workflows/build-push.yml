@@ -44,21 +44,13 @@ jobs:
             ls -lah ~
             echo "Listing folders in current directory:"
             ls -lah
-            # Install git if not available
-            if ! command -v git &>/dev/null; then
-              echo "Git not found, installing git..."
-              sudo dnf install -y git
-            fi
-            if [ -d "Sands-Of-Time-Deployment" ]; then
-              echo "Directory exists, pulling latest changes..."
-              cd Sands-Of-Time-Deployment
-              git pull origin main
-            else
-              echo "Directory not found; cloning repository..."
-              git clone https://github.com/Sarvesh521/Sands-Of-Time-Deployment.git
-              cd Sands-Of-Time-Deployment
-            fi
-            # Deploy with Docker Compose
+            echo "Changing directory to sands-of-time:"
+            cd sands-of-time
+            echo "Pulling latest changes from GitHub:"
+            git pull origin main
+            echo "pulling latest images from docker hub:"
             sudo docker-compose pull
             sudo docker image ls
-            sudo docker-compose up -d || true
+            sudo docker-compose up -d
+            sudo docker ps -a
+            echo "Deployment complete."
