@@ -42,23 +42,35 @@ jobs:
           script: |
             echo "Listing folders in home directory:"
             ls -lah ~
-            echo "Listing folders in current directory:"
-            ls -lah
             echo "Changing directory to Sands-Of-Time-Deployment:"
             cd Sands-Of-Time-Deployment
             echo "Listing folders in Sands-Of-Time-Deployment:"
             ls -lah
+
             echo "Installing Docker and docker-compose"
+            # Update packages
             sudo yum update -y
-            sudo amazon-linux-extras install docker -y
-            sudo service docker start
-            sudo yum install -y docker-compose
+
+            # Install Docker (if not already installed)
+            sudo yum install -y docker
+
+            # Start Docker service
+            sudo systemctl start docker
+
+            # Install docker-compose by downloading the binary (version 1.29.2 here; change as needed)
+            sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            sudo chmod +x /usr/local/bin/docker-compose
+
             echo "Pulling latest changes from GitHub:"
             git pull origin main
+
             echo "Pulling latest images from Docker Hub:"
             sudo docker-compose pull
-            sudo docker image ls
+
             echo "Starting containers with docker-compose up -d"
             sudo docker-compose up -d
+
+            echo "Listing Docker containers:"
             sudo docker ps -a
+
             echo "Deployment complete."
