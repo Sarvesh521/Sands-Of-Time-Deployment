@@ -69,4 +69,4 @@ jobs:
             echo "Listing Docker containers:"
             sudo docker ps -a
 
-            echo "Deployment complete."
+            echo "Deployment completed."
