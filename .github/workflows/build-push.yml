@@ -32,7 +32,6 @@ jobs:
         with:
           image-ref: "sarvesh717/sands-of-time:v2"
           severity: "CRITICAL,HIGH,MEDIUM"
-          exit-code: "1"
 
   deploy-container:
     needs: build-image

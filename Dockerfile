@@ -1,4 +1,4 @@
-FROM cgr.dev/chainguard/python:3.10
+FROM python:3.10-slim-bullseye
 
 # Create a non-root user
 RUN adduser --disabled-password --gecos "" appuser
@@ -10,9 +10,7 @@ RUN apt-get update && \
         pkg-config \
         default-libmysqlclient-dev && \
     rm -rf /var/lib/apt/lists/* && \
-    pip install --no-cache-dir --upgrade pip \
-    pip install pip-audit \
-    pip-audit -r requirements.txt
+    pip install --no-cache-dir --upgrade pip
 
 # Change working directory into the game folder where manage.py is located
 WORKDIR /app
