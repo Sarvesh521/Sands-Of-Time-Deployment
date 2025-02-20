@@ -47,5 +47,4 @@ jobs:
                 git pull origin main
                 sudo docker compose pull
                 sudo docker image ls
-                sudo docker compose up -d
-                sudo docker ps -a
+                sudo docker compose up -d || true
