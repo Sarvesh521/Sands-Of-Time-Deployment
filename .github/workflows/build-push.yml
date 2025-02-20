@@ -43,3 +43,4 @@ jobs:
             docker image ls
             docker compose up -d
             docker ps -a 
+            echo "Deployment successful"
