@@ -40,7 +40,7 @@ jobs:
         script: |
             cd Sands-Of-Time-Deployment
             git pull origin main
-            docker compose pull
-            docker image ls
-            docker compose up -d
-            docker ps -a
+            sudo docker-compose pull
+            sudo docker image ls
+            sudo docker-compose up -d
+            sudo docker ps -a
