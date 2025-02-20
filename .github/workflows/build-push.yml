@@ -44,6 +44,11 @@ jobs:
             ls -lah ~
             echo "Listing folders in current directory:"
             ls -lah
+            # Install git if not available
+            if ! command -v git &>/dev/null; then
+              echo "Git not found, installing git..."
+              sudo dnf install -y git
+            fi
             if [ -d "Sands-Of-Time-Deployment" ]; then
               echo "Directory exists, pulling latest changes..."
               cd Sands-Of-Time-Deployment
