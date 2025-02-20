@@ -8,3 +8,5 @@ services:
     volumes:
       - ./game:/app/game
     restart: unless-stopped
+    env_file:
+      - .env
