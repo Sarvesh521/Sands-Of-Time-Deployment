@@ -46,6 +46,10 @@ jobs:
             ls -lah
             echo "Changing directory to Sands-Of-Time-Deployment:"
             cd Sands-Of-Time-Deployment
+            echo " Installing docker and docker-compose"
+            sudo apt-get update
+            sudo apt-get install -y docker.io
+            sudo apt-get install -y docker-compose
             echo "Pulling latest changes from GitHub:"
             git pull origin main
             echo "pulling latest images from docker hub:"
