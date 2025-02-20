@@ -40,10 +40,10 @@ jobs:
           echo "$SSH_KEY" > key.pem
           chmod 600 key.pem
           ssh -o StrictHostKeyChecking=no -i key.pem $EC2_USER@$EC2_HOST << 'EOF'
-            # Update the instance and install Docker if not already installed
-            sudo yum update -y
-            sudo amazon-linux-extras install docker -y
-            sudo service docker start
+            # Update the instance and install Docker on Amazon Linux 2023
+            sudo dnf update -y
+            sudo dnf install -y docker
+            sudo systemctl start docker
             # Pull the latest Docker image
             docker pull sarvesh717/sands-of-time:v2
             # Stop any running container from the same image (if any)
