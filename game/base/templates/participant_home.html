@@ -135,7 +135,7 @@
         </div>
         {% if flag %}
         <div class="code-input-box">
-            <h2>Enter Code here !!!</h2>
+            <h2>Enter Code here !!</h2>
             <form method="post" action="{% url 'participant_home' %}">
                 {% csrf_token %}
                 <input type="text" id="text_input" name="text_input" required>
