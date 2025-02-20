@@ -39,11 +39,12 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY}}
         script: |
             echo "list all folders in the home directory"
-            ls -l
+            ls -lah
             echo "change directory to Sands-Of-Time-Deployment"
             cd Sands-Of-Time-Deployment
             echo "list all folders in Sands-Of-Time-Deployment"
-            ls -l
+            ls -lah
+            echo "pulling the latest image from docker hub"
             docker compose pull
             docker image ls
             docker compose up -d
