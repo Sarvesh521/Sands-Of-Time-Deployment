@@ -1,4 +1,4 @@
-FROM python:3.10-slim-bullseye
+FROM ghcr.io/chainguard/python:3.10
 
 # Create a non-root user
 RUN adduser --disabled-password --gecos "" appuser
