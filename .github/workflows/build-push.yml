@@ -40,17 +40,16 @@ jobs:
           echo "$SSH_KEY" > key.pem
           chmod 600 key.pem
           ssh -o StrictHostKeyChecking=no -i key.pem $EC2_USER@$EC2_HOST << 'EOF'
-            # Update the instance and install Docker on Amazon Linux 2023
+            # Update and install Docker if necessary
             sudo dnf update -y
             sudo dnf install -y docker
             sudo systemctl start docker
             # Pull the latest Docker image
             sudo docker pull sarvesh717/sands-of-time:v2
-            # Stop and remove an existing container if it exists
-            CONTAINER=$(sudo docker ps -q --filter ancestor=sarvesh717/sands-of-time:v2)
+            # Check if any container is using port 8000 and remove it forcefully
+            CONTAINER=$(sudo docker ps -q --filter publish=8000)
             if [ -n "$CONTAINER" ]; then
-              sudo docker stop "$CONTAINER"
-              sudo docker rm "$CONTAINER"
+              sudo docker rm -f "$CONTAINER"
             fi
             # Run a new container
             sudo docker run -d -p 8000:8000 sarvesh717/sands-of-time:v2
