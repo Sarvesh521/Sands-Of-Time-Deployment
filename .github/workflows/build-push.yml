@@ -57,7 +57,13 @@ jobs:
             # Start Docker service
             sudo systemctl start docker
 
-            # Install docker-compose by downloading the binary (version 1.29.2 here; change as needed)
+            # Install libxcrypt-compat to resolve libcrypt.so.1 error; if not available, create a symlink
+            if ! sudo yum install -y libxcrypt-compat; then
+              echo "libxcrypt-compat not available, creating symlink for libcrypt.so.1"
+              sudo ln -s /usr/lib64/libcrypt.so.2 /usr/lib64/libcrypt.so.1
+            fi
+
+            # Download docker-compose binary (version 1.29.2 used here; adjust as needed)
             sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             sudo chmod +x /usr/local/bin/docker-compose
 
