@@ -48,6 +48,8 @@ jobs:
             echo "Changing to repository directory..."
             cd ~/Sands-Of-Time-Deployment || { echo "Directory not found"; exit 1; }
             echo "Pulling latest changes from GitHub..."
+            git fetch origin
+            git reset --hard origin/main
             git pull origin main
             echo "Stopping existing containers..."
             sudo docker-compose down
