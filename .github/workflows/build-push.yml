@@ -56,6 +56,6 @@ jobs:
             echo "Listing Docker images..."
             sudo docker image ls
             echo "Starting containers..."
-            sudo docker-compose up -d
+            sudo docker-compose up -d --force-recreate
             echo "Listing running containers..."
             sudo docker ps -a
