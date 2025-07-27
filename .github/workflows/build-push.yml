@@ -20,7 +20,7 @@ jobs:
         uses: mr-smithers-excellent/docker-build-push@v6
         with:
           image: sarvesh717/sands-of-time
-          tags: v4
+          tags: v5
           registry: docker.io
           dockerfile: Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
@@ -56,6 +56,6 @@ jobs:
             echo "Listing Docker images..."
             sudo docker image ls
             echo "Starting containers..."
-            sudo docker-compose up -d --force-recreate
+            sudo docker-compose up -d
             echo "Listing running containers..."
             sudo docker ps -a
