@@ -1,11 +1,18 @@
 version: '3.9'
 
 services:
-  sands-of-time:
-    image: sarvesh717/sands-of-time:v2
-    command: python manage.py runserver 0.0.0.0:80
-    ports:
-      - "80:80"
+  backend:
+    image: sarvesh717/sands-of-time:v4
+    container_name: sot_backend
+    command: >
+      sh -c "python3 manage.py makemigrations --noinput &&
+             python3 manage.py migrate --noinput &&
+             python3 manage.py collectstatic --noinput &&
+             python3 manage.py runserver 0.0.0.0:8000"
+    restart: always
     volumes:
       - ./game:/app
-    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env

@@ -22,10 +22,10 @@ COPY --chown=appuser:appuser ./game /app
 RUN pip install --no-cache-dir -r ./requirements.txt
 
 # Expose the port the app runs on
-EXPOSE 80
+EXPOSE 8000
 
 # Drop root privileges
 USER appuser
 
 # Run the Django development server binding to all interfaces
-CMD ["python", "manage.py", "runserver", "0.0.0.0:80"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
