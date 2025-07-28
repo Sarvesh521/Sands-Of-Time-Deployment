@@ -11,8 +11,8 @@ import json
 game_codes_json = os.environ.get('GAME_CODES', '{}')
 d = json.loads(game_codes_json)
 
-print("Game codes loaded:", d)
-print("Game codes keys:", list(d.keys()))
+# print("Game codes loaded:", d)
+# print("Game codes keys:", list(d.keys()))
 
 k_l=list(d.keys())
 v_l=list(d.values())
