@@ -52,7 +52,6 @@ def registerPage(request):
         if form.is_valid():
             user = form.save(commit=False)
             if "iiitb.ac.in" in user.email:
-                user.email = user.email.lower()
                 user.save()
                 login(request, user)
                 return redirect("participant_home")
