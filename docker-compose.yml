@@ -12,5 +12,9 @@ services:
     restart: always
     volumes:
       - ./game:/app
+      - db_data:/app/data 
     ports:
       - "8000:8000"
+
+volumes:
+  db_data:
