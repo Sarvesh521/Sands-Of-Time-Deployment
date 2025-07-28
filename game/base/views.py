@@ -5,24 +5,12 @@ from .forms import MyUserCreationForm
 from django.contrib import messages
 from .models import User,Code
 from datetime import datetime, timedelta
-d={
-    'code_1':1,
-    'code_2':2,
-    'code_3':3,
-    'code_4':4,
-    'code_5':5,
-    'code_6':6,
-    'code_7':7,
-    'code_8':8,
-    'code_9':9,
-    'code_10':10,
-    'code_11':11,
-    'code_20':20,
-    'code_25':25,
-    'code_30':30,
-    'code_40':40,
-    'code_t1':"t1",
-}
+import os
+import json
+
+game_codes_json = os.environ.get('GAME_CODES', '{}')
+d = json.loads(game_codes_json)
+
 k_l=list(d.keys())
 v_l=list(d.values())
 def loginPage(request): 
