@@ -20,6 +20,7 @@ d={
     'code_20':20,
     'code_25':25,
     'code_30':30,
+    'code_40':40,
     'code_t1':"t1",
 }
 k_l=list(d.keys())
