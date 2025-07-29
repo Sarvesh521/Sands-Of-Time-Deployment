@@ -59,7 +59,7 @@ def registerPage(request):
         else:
             messages.error(
                 request,
-                "An error occurred during registration (Ensure that you are not using the same email id, this error could have been caused by that)",
+                "An error occurred during registration (Read the rules mentioned in the form. Ensure that you are not using the same email id, this error could have been caused by that)",
             )
 
     return render(request, "login_register.html", {"form": form})
