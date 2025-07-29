@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   backend:
-    image: sarvesh717/sands-of-time:v7
+    image: sarvesh717/sands-of-time:v8
     container_name: sot_backend
     command: >
       sh -c "python3 manage.py makemigrations --noinput &&

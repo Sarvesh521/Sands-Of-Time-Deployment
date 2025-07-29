@@ -20,7 +20,7 @@ jobs:
         uses: mr-smithers-excellent/docker-build-push@v6
         with:
           image: sarvesh717/sands-of-time
-          tags: v7
+          tags: v8
           registry: docker.io
           dockerfile: Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
@@ -30,7 +30,7 @@ jobs:
       - name: Scan Docker Image with Trivy
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: "sarvesh717/sands-of-time:v7"
+          image-ref: "sarvesh717/sands-of-time:v8"
           severity: "CRITICAL,HIGH,MEDIUM"
 
   deploy-container:
